@@ -14,7 +14,7 @@ const cancelOption = `CANCEL. ${emojis.get('back')}`;
 const launchErrorMessage = message => {
   message = `${emojis.get('warning')}\x20 ${message}`;
   return message;
-}
+};
 
 const checkFileName = fileName => {
   const pattern = /^[0-9a-zA-Z_]+$/;
@@ -38,7 +38,7 @@ const help = () => {
     );
   }
   return helpFileData;
-}
+};
 
 const showMe = () => {
   const result = lib.executeExample();
@@ -49,7 +49,7 @@ const showMe = () => {
     flow: 'success',
   };
   return response;
-}
+};
 
 const createFile = options => {
   if (!options.name) {
@@ -68,7 +68,7 @@ const createFile = options => {
     };
     return response;
   }
-}
+};
 
 const listFiles = async () => {
   let filesList = await lib.listFiles();
@@ -86,7 +86,7 @@ const listFiles = async () => {
     flow: 'success',
   };
   return response;
-}
+};
 
 const processSelectedFile = options => {
   if (!options.path) {
@@ -100,7 +100,7 @@ const processSelectedFile = options => {
     flow: 'success',
   };
   return response;
-}
+};
 
 const addDataForTraining = options => {
   const result = lib.addDataForTraining(options.add);
@@ -112,7 +112,7 @@ const addDataForTraining = options => {
     flow: 'success',
   };
   return response;
-}
+};
 
 const doTraining = options => {
   const result = lib.doTraining(options.iter, options.error);
@@ -120,7 +120,7 @@ const doTraining = options => {
     message: result.message,
   };
   return response;
-}
+};
 
 const analizeFile = filePath => {
   console.log(`Executed net with file ${filePath} ${emojis.get('coffee')}`);
@@ -131,7 +131,7 @@ const analizeFile = filePath => {
     )}\rFile data:\r${result.fileData}\rString number:\r${result.stringNumber}`,
   };
   return response;
-}
+};
 
 const neuralNetWork = options => {
   if (options.add === 0 || options.add) {
@@ -145,11 +145,11 @@ const neuralNetWork = options => {
   return launchErrorMessage(
     'the option for the "ml" action are not recognized.'
   );
-}
+};
 
 const noEntry = () => {
   return launchErrorMessage(defaultMessage);
-}
+};
 
 const isValidCommand = command => {
   if (!command[0] || command[0].toLowerCase() !== 'sspe') {
@@ -163,7 +163,7 @@ const isValidCommand = command => {
     options[command[index].replace('--', '')] = command[index + 1];
   }
   return { valid: true, options };
-}
+};
 
 exports.processCommand = async options => {
   const isValid = isValidCommand(options);
