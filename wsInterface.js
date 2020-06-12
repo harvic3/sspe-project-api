@@ -80,7 +80,7 @@ const listFiles = async () => {
   filesList = filesList.map((file, index) => `\r${index + 1}: ${file}`);
   filesList.push(`\r${filesList.length + 1}: ${cancelOption}`);
   const response = {
-    message: `Write the number of file you want to process ${filesList.join(
+    message: `Write the number of file you want to process and press ENTER ${filesList.join(
       ''
     )}`,
     flow: 'success',
