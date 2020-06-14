@@ -134,13 +134,18 @@ const analizeFile = filePath => {
 };
 
 const neuralNetWork = options => {
+  const msg =
+    'For CLI web this option is not available but if you want you can clone the ' +
+    "'https://github.com/harvic3/sspe-project' repository and play on your machine.";
   if (options.add === 0 || options.add) {
     return addDataForTraining(options);
   } else if (options.path) {
     const filePath = path.join(__dirname, `/files/${options.path}`);
-    return analizeFile(filePath);
+    //return analizeFile(filePath);
+    return launchErrorMessage(msg);
   } else if (Object.keys(options).length === 1 || options.iter) {
-    return doTraining(options);
+    //return doTraining(options);
+    return launchErrorMessage(msg);
   }
   return launchErrorMessage(
     'the option for the "ml" action are not recognized.'

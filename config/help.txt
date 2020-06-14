@@ -28,7 +28,7 @@
         options: (One at a time) {{robot_face}}
           --add: number to add as data for training process. (if you send "auto" as value, the system will generate it randomly)
             example -> sspe ml --add 31039064 OR sspe ml --add auto
-          --path: location of the file to be processed. * For CLI Web write a File Name of list of Action 3
+          --path: location of the file to be processed. * For CLI Web write a File Name of list of Action 3 *NA*
           example -> sspe ml --path D:/Data/Test/LastFile.txt
           --iter: number of iterations for training. (if not indicated, default is 20.000) *NA*
           example -> sspe ml --iter 30000 OR -> sspe ml
