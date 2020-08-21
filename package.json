@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "@koa/router": "^9.0.1",
+    "@koa/router": "^9.3.1",
     "brain.js": "^1.6.1",
     "dotenv": "^8.2.0",
     "inquirer": "^6.5.2",
