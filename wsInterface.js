@@ -89,13 +89,13 @@ const listFiles = async () => {
 };
 
 const processSelectedFile = options => {
-  if (!options.path) {
-    return launchErrorMessage('this option require file "--path" as parameter');
+  if (!options.name) {
+    return launchErrorMessage('this option require file "--name" as parameter');
   }
-  const filePath = path.join(__dirname, `/files/${options.path}`);
+  const filePath = path.join(__dirname, `/files/${options.name}`);
   const result = lib.processFile(filePath);
   const response = {
-    message: `Executing with file ${options.path} ${emojis.get('coffee')}
+    message: `Executing with file ${options.name} ${emojis.get('coffee')}
     File data:\r${result.fileData}\rString number: ${result.stringNumber}`,
     flow: 'success',
   };
@@ -122,9 +122,9 @@ const doTraining = options => {
   return response;
 };
 
-const analizeFile = filePath => {
+const analiceFile = filePath => {
   console.log(`Executed net with file ${filePath} ${emojis.get('coffee')}`);
-  const result = lib.analizeFile(filePath);
+  const result = lib.analiceFile(filePath);
   const response = {
     message: `Executed net with file ${filePath} ${emojis.get(
       'coffee'
@@ -141,7 +141,7 @@ const neuralNetWork = options => {
     return addDataForTraining(options);
   } else if (options.path) {
     const filePath = path.join(__dirname, `/files/${options.path}`);
-    //return analizeFile(filePath);
+    //return analiceFile(filePath);
     return launchErrorMessage(msg);
   } else if (Object.keys(options).length === 1 || options.iter) {
     //return doTraining(options);

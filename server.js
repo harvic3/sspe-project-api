@@ -8,22 +8,32 @@ const Router = require('@koa/router');
 const cors = require('@koa/cors');
 
 const pathSocket = '/stomp';
-const origins = [config.remote.servicUrl, 'http://localhost:8080'];
-
+const origins = [config.remote.clientUrl, 'http://localhost:8080'];
 const router = new Router();
 router.get('/ping', (ctx, next) => {
-  ctx.body = `pong on ${Date.now()}. Please do not break my toy. ;)`;
+  ctx.body = `pong on ${Date.now()}. Please do not break my toy. ;P`;
 });
 router.get('/params', (ctx, next) => {
-  if (ctx.headers.apikey !== '-remote-sspe-cli-web-') {
-    ctx.body = 'Please do not break my toy. ;)';
+  if (ctx.headers['x-api-key'] === config.apiKey) {
+    ctx.body = config.remote;
     return;
   }
-  ctx.body = config.remote;
+  ctx.body = 'Please do not break my toy. ;P';
 });
 
 const app = new Koa();
-app.use(cors());
+app.use(
+  cors({
+    origin: function (ctx) {
+      console.log('Origin: ', ctx.request.header.origin);
+      if (origins.includes(ctx.request.header.origin)) {
+        return ctx.request.header.origin;
+      }
+      return false;
+    },
+    credentials: true,
+  })
+);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
@@ -33,8 +43,12 @@ app.on('error', (err, ctx) => {
 
 const server = require('http').Server(app.callback());
 const io = require('socket.io')(server, {
+  cors: {
+    origin: origins,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
   serveClient: false,
-  origins: '*:*',
   path: pathSocket,
   rejectUnauthorized: false,
   transports: ['polling', 'websocket'],
@@ -42,7 +56,7 @@ const io = require('socket.io')(server, {
 
 io.on('connection', async socket => {
   console.log(socket.client.request.headers['origin']);
-  if (origins[socket.client.request.headers['origin']] == -1) {
+  if (!origins.includes(socket.client.request.headers['origin'])) {
     console.log(
       `Unauthorized origin ${new Date()} ${
         socket.client.request.headers['origin']
@@ -65,5 +79,5 @@ server.listen(PORT, () => {
 });
 
 process.on('unhandledRejection', err => {
-  console.log('Proccess Error', err);
+  console.log('Process Error', err);
 });

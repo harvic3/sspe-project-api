@@ -51,7 +51,7 @@ function existsSync(filePath) {
       });
     }
   }
-  return exists ? true : false;
+  return !!exists;
 }
 
 function readdirSync(directoryPath) {
@@ -72,21 +72,11 @@ function writeFileSync(filePath, fileData) {
     mockFiles[directoryPath] = [];
   }
   mockFiles[directoryPath].push(path.basename(fileName));
-  _customFiles[filePath] = null;
   _customFiles[filePath] = fileData;
-  return;
 }
 
 function appendFileSync(filePath, fileData) {
-  const directoryPath = path.dirname(filePath);
-  const fileName = path.basename(filePath);
-  if (!mockFiles[directoryPath]) {
-    mockFiles[directoryPath] = [];
-  }
-  mockFiles[directoryPath].push(path.basename(fileName));
-  _customFiles[filePath] = null;
-  _customFiles[filePath] = fileData;
-  return;
+  writeFileSync(filePath, fileData);
 }
 
 fs.__setMockFiles = __setMockFiles;

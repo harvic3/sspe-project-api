@@ -91,10 +91,10 @@ exports.trainNet = (iterations, errorThresh) => {
   return result;
 };
 
-exports.analizeFile = filePath => {
+exports.analiceFile = filePath => {
   const result = new Result();
   try {
-    if (!netJson || !netJson.type) {
+    if (!netJson?.type) {
       throw { message: 'You must train the net to use it!' };
     }
     if (!isValidFilePath(filePath)) {
